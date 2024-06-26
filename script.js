@@ -3,9 +3,9 @@ let blocos = Array.from(document.querySelectorAll('.grid div'))
 const placarDisplay = document.getElementById('placar');
 const startbtn = document.getElementById('Start-button')
 const width = 10
-let nextRandom = 0
-let timerId
-let score = 0
+// let nextRandom = 0
+// let timerId
+// let score = 0
 
 
 
@@ -49,7 +49,13 @@ let score = 0
 const osTetrominos = [ lTetromino, zTetromino, tTetromino, oTetromino, iTetromino]
 
 let posiçãoAtual = 4
-let atual = osTetrominos[0][0]
+let rotacaoAtual = 0
+
+// aletoriamente criar uma peça
+
+let random = Math.floor(Math.random() * osTetrominos.length)
+
+let atual = osTetrominos[random][rotacaoAtual]
 
 // desenhando as peças
 
@@ -60,5 +66,19 @@ blocos[posiçãoAtual + index].classList.add('tetromino')
 
 }
 
-desenhar()
-// console.log(osTetrominos [0] [0])
+function apagar(){
+  atual.forEach(index => {
+    blocos[posiçãoAtual + index].classList.remove('tetromino')
+      })
+}
+
+
+// fazer as peças se mover
+timerId = setInterval(mover, 1000)
+
+function mover(){
+  apagar()
+  posiçãoAtual += width
+  desenhar()
+}
+// 
