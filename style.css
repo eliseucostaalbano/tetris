@@ -13,3 +13,7 @@
     height: 20px;
     background-color: black;
   }
+
+  .tetromino {
+    background-color: silver;
+  }
