@@ -53,7 +53,12 @@ let atual = osTetrominos[0][0]
 
 // desenhando as peças
 
+function desenhar(){
+  atual.forEach(index => {
+blocos[posiçãoAtual + index].classList.add('tetromino')
+  })
 
+}
 
-
+desenhar()
 // console.log(osTetrominos [0] [0])
