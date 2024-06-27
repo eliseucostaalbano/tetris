@@ -80,5 +80,18 @@ function mover(){
   apagar()
   posiçãoAtual += width
   desenhar()
+  pare()
 }
-// 
+
+// criando a função pare
+function pare(){
+  if(atual.some(index => blocos[posiçãoAtual + index + width].classList.contains('final'))){
+ atual.forEach(index => blocos[posiçãoAtual + index].classList.add('final'))
+
+//  uma nova peça começa a cair
+   random = Math.floor(Math.random() * osTetrominos.length)
+   atual = osTetrominos[random][rotacaoAtual]
+   posiçãoAtual = 4
+   desenhar()
+  }
+}
