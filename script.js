@@ -74,9 +74,20 @@ function apagar(){
 
 
 // fazer as peças se mover
-timerId = setInterval(mover, 1000)
+timerId = setInterval(moverBaixo, 1000)
 
-function mover(){
+// chamar funções com KeyCodes
+
+function controle(e){
+  if(e.keyCode === 37)
+  {
+    moverEsquerda()
+  }
+}
+
+document.addEventListener('keyup', controle)
+
+function moverBaixo(){
   apagar()
   posiçãoAtual += width
   desenhar()
