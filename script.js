@@ -108,3 +108,12 @@ function moverEsquerda(){
   }
   desenhar()
 }
+
+
+// conserta a rotaçao nos lados
+function haDireita() {
+  return current.some(index => (posiçãoAtual + index + 1) % width === 0)
+}
+function haEsquerda() {
+  return current.some(index => (posiçãoAtual + index) % width === 0)
+}
