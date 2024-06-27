@@ -95,3 +95,16 @@ function pare(){
    desenhar()
   }
 }
+
+// mover o tetromino para esquerda , a menos que estaja na ponta ou bloqueado
+function moverEsquerda(){
+  apagar()
+  
+  const pontaEsquerda = atual.some(index => (posiçãoAtual + index) % width === 0 )
+
+  if(!pontaEsquerda) posiçãoAtual -=1
+  if(atual.some(index => blocos[posiçãoAtual + index].classList.contains('final'))){
+    posiçãoAtual += 1
+  }
+  desenhar()
+}
