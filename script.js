@@ -3,7 +3,10 @@ let blocos = Array.from(document.querySelectorAll('.grid div'))
 const placarDisplay = document.getElementById('placar');
 const startbtn = document.getElementById('Start-button')
 const width = 10
-// let nextRandom = 0
+const displayBlocos = document.querySelectorAll('.mini-grid div')
+const displayWidth = 4
+const displayIndex = 0
+let proximoRandom = 0
 // let timerId
 // let score = 0
 
@@ -83,6 +86,14 @@ function controle(e){
   {
     moverEsquerda()
   }
+    else if(e.keyCode === 38){
+      rotacionar()
+    }else if(e.keyCode === 39){
+      moverDireita()
+    }else if(e.keyCode === 40){
+      moverBaixo()
+    }
+
 }
 
 document.addEventListener('keyup', controle)
@@ -98,12 +109,13 @@ function moverBaixo(){
 function pare(){
   if(atual.some(index => blocos[posiçãoAtual + index + width].classList.contains('final'))){
  atual.forEach(index => blocos[posiçãoAtual + index].classList.add('final'))
-
 //  uma nova peça começa a cair
-   random = Math.floor(Math.random() * osTetrominos.length)
+   random = proximoRandom
+   proximoRandom = Math.floor(Math.random() * osTetrominos.length)
    atual = osTetrominos[random][rotacaoAtual]
    posiçãoAtual = 4
    desenhar()
+   displayForma()
   }
 }
 
@@ -120,6 +132,18 @@ function moverEsquerda(){
   desenhar()
 }
 
+// mover o tetromino para direita , a menos que estaja na ponta ou bloqueado
+function moverDireita(){
+  apagar()
+  
+  const pontaDireita = atual.some(index => (posiçãoAtual + index) % width === width -  1 )
+
+  if(!pontaDireita) posiçãoAtual +=1
+  if(atual.some(index => blocos[posiçãoAtual + index].classList.contains('final'))){
+    posiçãoAtual -= 1
+  }
+  desenhar()
+}
 
 // conserta a rotaçao nos lados
 function haDireita() {
@@ -128,3 +152,34 @@ function haDireita() {
 function haEsquerda() {
   return current.some(index => (posiçãoAtual + index) % width === 0)
 }
+
+function rotacionar(){
+  apagar()
+  rotacaoAtual++
+  if(rotacaoAtual === atual.length){
+    rotacaoAtual = 0
+  }
+  atual= osTetrominos[random] [rotacaoAtual]
+  desenhar()
+}
+
+// mostar proxima peça no mini-grid
+
+// os tetromino sem rotação
+  const proximosTetrominoes = [
+    [1, displayWidth+1, displayWidth*2+1, 2], //lTetromino
+    [0, displayWidth, displayWidth+1, displayWidth*2+1], //zTetromino
+    [1, displayWidth, displayWidth+1, displayWidth+2], //tTetromino
+    [0, 1, displayWidth, displayWidth+1], //oTetromino
+    [1, displayWidth+1, displayWidth*2+1, displayWidth*3+1] //iTetromino
+  ]
+
+  // mostrar a forma no mini grid
+  function displayForma(){
+ displayBlocos.forEach(bloco => {
+  bloco.classList.remove('tetromino')
+ })
+ proximosTetrominoes[proximoRandom].forEach(index => {
+  displayBlocos[displayIndex + index].classList.add('tetromino')
+ })
+  }
