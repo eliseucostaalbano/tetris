@@ -153,6 +153,23 @@ function haEsquerda() {
   return current.some(index => (posiçãoAtual + index) % width === 0)
 }
 
+  function checarPosicaoRotacionada(P){
+    P = P || posiçãoAtual    //pega posição atual. Então, checa se a peça esta perto da esqueda ou direita.
+    if ((P+1) % width < 4) {         //adicone 1 porque a posição index pode ser 1 menos de onde a peça esta (de como elas foram idexadas).     
+      if (haDireita()){            //usa posição atual para checar se esta do lado direito
+        posiçãoAtual += 1    //se sim, adiciona um para ficar parada
+      checarPosicaoRotacionada(P) //checa novamente. Passa posicão do começo, pois longos blocos talves precisem mover mais.
+        }
+    }
+    else if (P % width > 5) {
+      if (haEsquerda()){
+        posiçãoAtual -= 1
+      checarPosicaoRotacionada(P)
+      }
+    }
+  }
+
+
 function rotacionar(){
   apagar()
   rotacaoAtual++
@@ -183,3 +200,5 @@ function rotacionar(){
   displayBlocos[displayIndex + index].classList.add('tetromino')
  })
   }
+
+
