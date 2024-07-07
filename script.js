@@ -9,7 +9,13 @@ const displayIndex = 0
 let proximoRandom = 0
 let timerId
 let placar = 0
-
+const cores = [
+  'green',
+  'red',
+  'aqua',
+  'yellow',
+  'black'
+]
 
 
 // as peças de tetris
@@ -65,6 +71,7 @@ let atual = osTetrominos[random][rotacaoAtual]
 function desenhar() {
   atual.forEach(index => {
     blocos[posiçãoAtual + index].classList.add('tetromino')
+    blocos[posiçãoAtual + index].style.backgroundColor = cores[random]
   })
 
 }
@@ -72,6 +79,7 @@ function desenhar() {
 function apagar() {
   atual.forEach(index => {
     blocos[posiçãoAtual + index].classList.remove('tetromino')
+    blocos[posiçãoAtual + index].style.backgroundColor = ''
   })
 }
 
@@ -195,9 +203,11 @@ const proximosTetrominoes = [
 function displayForma() {
   displayBlocos.forEach(bloco => {
     bloco.classList.remove('tetromino')
+    bloco.style.backgroundColor = ''
   })
   proximosTetrominoes[proximoRandom].forEach(index => {
     displayBlocos[displayIndex + index].classList.add('tetromino')
+    displayBlocos[displayIndex + index].style.backgroundColor = cores[proximoRandom]
   })
 }
 
@@ -229,6 +239,7 @@ function addPlacar() {
       linha.forEach(index => {
         blocos[index].classList.remove('final')
         blocos[index].classList.remove('tetromino')
+        blocos[index].style.backgroundColor = ''
       })
       const blocosRemovidos = blocos.splice(i, width)
       blocos = blocosRemovidos.concat(blocos)
@@ -239,9 +250,9 @@ function addPlacar() {
 
 
 // game over
-function gameOver(){
-if (atual.some(index => blocos[posiçãoAtual + index].classList.contains('final'))) {
-  placarDisplay.innerHTML = 'fim'
-  clearInterval(timerId)
-}
+function gameOver() {
+  if (atual.some(index => blocos[posiçãoAtual + index].classList.contains('final'))) {
+    placarDisplay.innerHTML = 'fim'
+    clearInterval(timerId)
+  }
 }
